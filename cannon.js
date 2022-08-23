@@ -12,9 +12,21 @@ class Cannon {
 
     //função para mostrar o canhão
     display(){
+        console.log(this.angle);
+        
+        if(keyIsDown(LEFT_ARROW) && this.angle>-30 ){
+            this.angle=this.angle-1;
+        }
+         
+        if(keyIsDown(RIGHT_ARROW) && this.angle<70){
+            this.angle=this.angle+1;
+        }
+
         push();
+        translate(this.x,this.y)
+        rotate(this.angle)
         imageMode(CENTER)
-        image(this.cannonimage,this.x,this.y,this.w,this.h);
+        image(this.cannonimage,0,0,this.w,this.h);
        pop()
 
        image(this.cannonbase,70,20,200,200)

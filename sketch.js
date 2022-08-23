@@ -1,6 +1,8 @@
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
+var ball;
+var grupodebolas=[]
 
 var world, engine;
 
@@ -33,6 +35,9 @@ function setup() {
   torre = Bodies.rectangle(160,350,160,310, options);
   World.add(world, torre);
 
+  angleMode(DEGREES);
+  angle=15
+
   canhao = new Cannon(180,110,130,100,angle);
   
 }
@@ -55,4 +60,28 @@ function draw() {
 
   canhao.display();
   
+  for(var i = 0;i<grupodebolas.length;i=i+1){
+     showballs(grupodebolas[i],i)
+  }
+  
+}
+
+
+function keyPressed(){
+  if(keyCode===DOWN_ARROW){
+    ball = new Cannonball(canhao.x,canhao.y);
+  grupodebolas.push(ball);
+  }
+}
+
+function keyReleased(){
+  if(keyCode===DOWN_ARROW){
+  grupodebolas[grupodebolas.length-1].lancar();
+  }
+}
+
+function showballs(ball,i){
+  if (ball){
+    ball.display()
+  }
 }
