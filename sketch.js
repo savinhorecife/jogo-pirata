@@ -4,12 +4,15 @@ const Bodies = Matter.Bodies;
 var ball;
 var grupodebolas=[]
 
+var grupodenavios=[]
+
 var world, engine;
 
 var solo;
 var bgImg;
 var torre, torreImg;
 var angle=20,canhao;
+var navio;
 
 //na function preload carregamos imagem, animações e sons
 function preload() {
@@ -39,6 +42,9 @@ function setup() {
   angle=15
 
   canhao = new Cannon(180,110,130,100,angle);
+
+ 
+
   
 }
 
@@ -62,8 +68,21 @@ function draw() {
   
   for(var i = 0;i<grupodebolas.length;i=i+1){
      showballs(grupodebolas[i],i)
+     colisaonavio(i)
   }
-  
+
+ showNavios();
+}
+
+function colisaonavio(index){
+  for(var i =0;i<grupodenavios.length; i=i+1){
+    if(grupodebolas[index]!==undefined && grupodenavios[i]!==undefined){
+      var colisao = Matter.SAT.collides(grupodebolas[index],grupodenavios[i]);
+      if(colisao.collided){
+        grupodenavios[i].remove(i);
+      }
+    }
+  }
 }
 
 
@@ -85,3 +104,32 @@ function showballs(ball,i){
     ball.display()
   }
 }
+
+function showNavios(){
+ if (grupodenavios.length>0){
+
+  if(
+    grupodenavios[grupodenavios.length-1]===undefined ||
+    grupodenavios[grupodenavios.length-1].body.position.x<width-300
+  ){
+    var positions=[-40,-60,-70,-20];
+    var pos=random(positions);
+    navio = new Boat(width, height-60, 170,170,pos);
+    grupodenavios.push(navio)
+  
+  }
+
+for(var i =0;i<grupodenavios.length; i=i+1){
+  if(grupodenavios[i]){
+    Matter.Body.setVelocity(grupodenavios[i].body,{x:-0.9,y:0});
+    grupodenavios[i].display();
+    
+  }
+}
+
+ } else {
+  navio = new Boat(width, height-60, 170,170,-60);
+  grupodenavios.push(navio)
+ }
+}
+
