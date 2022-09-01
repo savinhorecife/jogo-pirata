@@ -1,35 +1,33 @@
 class Cannon {
-    //função para criar o canhão
-    constructor(x,y,w,h,angle){
-    this.x=x;
-    this.y=y;
-    this.w=w;
-    this.h=h;
-    this.angle=angle;
-    this.cannonimage=loadImage("./assets/canon.png");
-    this.cannonbase=loadImage("./assets/cannonBase.png");
+  constructor(x, y, width, height, angle) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.angle = angle;
+    this.cannon_image = loadImage("assets/canon.png");
+    this.cannon_base = loadImage("assets/cannonBase.png");
+  }
+
+  display() {
+
+    //mover o canhão para esquerda e para direita
+    if (keyIsDown(RIGHT_ARROW) && this.angle<70  ) {
+      this.angle += 1;
     }
 
-    //função para mostrar o canhão
-    display(){
-        console.log(this.angle);
-        
-        if(keyIsDown(LEFT_ARROW) && this.angle>-30 ){
-            this.angle=this.angle-1;
-        }
-         
-        if(keyIsDown(RIGHT_ARROW) && this.angle<70){
-            this.angle=this.angle+1;
-        }
-
-        push();
-        translate(this.x,this.y)
-        rotate(this.angle)
-        imageMode(CENTER)
-        image(this.cannonimage,0,0,this.w,this.h);
-       pop()
-
-       image(this.cannonbase,70,20,200,200)
+    if (keyIsDown(LEFT_ARROW) && this.angle>-30 ) {
+      this.angle -= 1;
     }
 
+    // mostrar o canhão
+    push();
+    translate(this.x, this.y);
+    rotate(this.angle);
+    imageMode(CENTER);
+    image(this.cannon_image, 0, 0, this.width, this.height);
+    pop();
+    image(this.cannon_base, 70, 20, 200, 200);
+    noFill();
+  }
 }
